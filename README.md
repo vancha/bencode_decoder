@@ -1,4 +1,4 @@
-#Bencode decoder
+# Bencode decoder
 This is a very simple bencode decoder i have written as a learning excersize
 It can decode a torrent file and neatly parse the contents
 
