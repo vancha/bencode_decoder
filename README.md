@@ -8,5 +8,6 @@ decoded_dict = bdecoder.decode("./example.torrent")
 ```
 that should return the contents of the dictionary encoded in to the torrent file
 
-can be installed by cloning, and calling `pip3 install .` from within the root folder.
+can be installed with `pip3 install git+https://github.com/vancha/bencode_decoder.git`
+
 to uninstall, use `pip3 remove bencode-decoder`. 
