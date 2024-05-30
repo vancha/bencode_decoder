@@ -23,7 +23,7 @@ class bdecoder:
         #tp = type(byte_iterator.peek())
         for _ in range(int(length)):
             result.append(next(byte_iterator))
-        return bytearray(result)
+        return bytes(bytearray(result))
 
     '''
     Assumes the next(byte_iterator) returns the start of an integer
@@ -84,12 +84,7 @@ class bdecoder:
         while not chr(byte_iterator.peek()) == "e":
             field_name =  bdecoder.decode_byte_string(byte_iterator)#.decode('utf_16_be')
             field_value = bdecoder.decode_next(byte_iterator)
-            #>> All character string values are utf-8 encoded
-            #if field_name in ["announce", "comment","encoding"]:
-            #    field_value = field_value.decode('utf_8')
-            #if field_name == "pieces":
-            #    print(f'pieces: {field_value}')
-            result[field_name.decode('utf-8')] = field_value
+            result[field_name] = field_value
 
         #skip over the 'e'
         next(byte_iterator)
