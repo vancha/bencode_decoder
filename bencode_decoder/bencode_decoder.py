@@ -100,5 +100,5 @@ class bdecoder:
         byte_iterator  = peekable(file)
         return bdecoder.decode_next(byte_iterator)
 
-decoded_file = bdecoder.decode("./ubuntu.torrent")
-print(decoded_file[b"info"])
+#decoded_file = bdecoder.decode("./ubuntu.torrent")
+#print(decoded_file[b"info"])
