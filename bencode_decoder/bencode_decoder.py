@@ -13,18 +13,18 @@ class bdecoder:
     def decode_byte_string(byte_iterator):
         #byte strings are length prefixed, get the length first
         length = ''
-         
+
         while chr(byte_iterator.peek()).isnumeric():
             length += chr(next(byte_iterator))
-        
+
         #byte strings are suffixed with a :, skip over that before returning
         next(byte_iterator)
-        result = b""
-        tp = type(byte_iterator.peek())
+        result = []
+        #tp = type(byte_iterator.peek())
         for _ in range(int(length)):
-            result += next(byte_iterator).to_bytes(2,'big')
-        return result
-    
+            result.append(next(byte_iterator))
+        return bytearray(result)
+
     '''
     Assumes the next(byte_iterator) returns the start of an integer
     Moves forward in the iterator and returns the integer
@@ -33,10 +33,10 @@ class bdecoder:
         #skip over the 'i'
         next(byte_iterator)
         values = ''
-         
+
         while not chr(byte_iterator.peek()) == 'e':#.isnumeric():
             values += chr(next(byte_iterator))
-        
+
         #skip over the 'e'
         next(byte_iterator)
         return int(values)
@@ -56,7 +56,7 @@ class bdecoder:
         #skip over the 'e'
         next(byte_iterator)
         return result
-    
+
     '''
     Deduces the type of the next object in the iterator and returns it
     '''
@@ -71,7 +71,7 @@ class bdecoder:
             return bdecoder.decode_integer(byte_iterator)
         else:
             return bdecoder.decode_byte_string(byte_iterator)
-    
+
     '''
     Assumes the next(byte_iterator) returns the start of a dictionary
     Moves forward in the iterator and returns the dictionary
@@ -82,9 +82,14 @@ class bdecoder:
 
         result  = {}
         while not chr(byte_iterator.peek()) == "e":
-            field_name =  bdecoder.decode_byte_string(byte_iterator)
+            field_name =  bdecoder.decode_byte_string(byte_iterator)#.decode('utf_16_be')
             field_value = bdecoder.decode_next(byte_iterator)
-            result[field_name] = field_value
+            #>> All character string values are utf-8 encoded
+            #if field_name in ["announce", "comment","encoding"]:
+            #    field_value = field_value.decode('utf_8')
+            #if field_name == "pieces":
+            #    print(f'pieces: {field_value}')
+            result[field_name.decode('utf-8')] = field_value
 
         #skip over the 'e'
         next(byte_iterator)
