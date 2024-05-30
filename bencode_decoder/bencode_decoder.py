@@ -21,7 +21,6 @@ class bdecoder:
         next(byte_iterator)
         result = b""
         tp = type(byte_iterator.peek())
-        print(f'type of next thingy is {tp}')
         for _ in range(int(length)):
             result += next(byte_iterator).to_bytes(2,'big')
         return result
