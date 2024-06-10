@@ -1,6 +1,6 @@
 #used to see what the next byte in the torrent file is
-from more_itertools import peekable
-
+from     more_itertools import peekable
+from    collections     import OrderedDict
 '''
 A python class that can decode a torrent file
 Call bdecoder.decode( torrent_file_location )  to use it.
